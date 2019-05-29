@@ -13,33 +13,6 @@
       "destination" : {
         "comments" : "",
         "groupId" : "a3832e40-016a-1000-9335-56cf093f10f5",
-        "id" : "39adb8fb-f24c-3939-bf20-f96cefe88dc3",
-        "name" : "UpdateAttribute",
-        "type" : "PROCESSOR"
-      },
-      "flowFileExpiration" : "0 sec",
-      "groupIdentifier" : "ed6e205a-240f-3870-93ce-bc576df1e35d",
-      "identifier" : "b35708a8-8718-3367-9617-56010e30efd2",
-      "labelIndex" : 1,
-      "name" : "",
-      "prioritizers" : [ ],
-      "selectedRelationships" : [ "failure", "success" ],
-      "source" : {
-        "comments" : "",
-        "groupId" : "a3832e40-016a-1000-9335-56cf093f10f5",
-        "id" : "ad53c0e7-69c7-3804-9ab6-7c1b52b43112",
-        "name" : "PutFile",
-        "type" : "PROCESSOR"
-      },
-      "zIndex" : 0
-    }, {
-      "backPressureDataSizeThreshold" : "1 GB",
-      "backPressureObjectThreshold" : 10000,
-      "bends" : [ ],
-      "componentType" : "CONNECTION",
-      "destination" : {
-        "comments" : "",
-        "groupId" : "a3832e40-016a-1000-9335-56cf093f10f5",
         "id" : "ad53c0e7-69c7-3804-9ab6-7c1b52b43112",
         "name" : "PutFile",
         "type" : "PROCESSOR"
@@ -73,7 +46,7 @@
     },
     "processGroups" : [ ],
     "processors" : [ {
-      "autoTerminatedRelationships" : [ ],
+      "autoTerminatedRelationships" : [ "success", "failure" ],
       "bulletinLevel" : "WARN",
       "bundle" : {
         "artifact" : "nifi-standard-nar",
@@ -223,55 +196,6 @@
       "schedulingStrategy" : "TIMER_DRIVEN",
       "style" : { },
       "type" : "org.apache.nifi.processors.standard.GenerateFlowFile",
-      "yieldDuration" : "1 sec"
-    }, {
-      "autoTerminatedRelationships" : [ "success" ],
-      "bulletinLevel" : "WARN",
-      "bundle" : {
-        "artifact" : "nifi-update-attribute-nar",
-        "group" : "org.apache.nifi",
-        "version" : "1.6.0"
-      },
-      "comments" : "",
-      "componentType" : "PROCESSOR",
-      "concurrentlySchedulableTaskCount" : 1,
-      "executionNode" : "ALL",
-      "groupIdentifier" : "ed6e205a-240f-3870-93ce-bc576df1e35d",
-      "identifier" : "39adb8fb-f24c-3939-bf20-f96cefe88dc3",
-      "name" : "UpdateAttribute",
-      "penaltyDuration" : "30 sec",
-      "position" : {
-        "x" : 1843.4688191986475,
-        "y" : 784.1876868821989
-      },
-      "properties" : {
-        "Store State" : "Do not store state"
-      },
-      "propertyDescriptors" : {
-        "Delete Attributes Expression" : {
-          "displayName" : "Delete Attributes Expression",
-          "identifiesControllerService" : false,
-          "name" : "Delete Attributes Expression",
-          "sensitive" : false
-        },
-        "Store State" : {
-          "displayName" : "Store State",
-          "identifiesControllerService" : false,
-          "name" : "Store State",
-          "sensitive" : false
-        },
-        "Stateful Variables Initial Value" : {
-          "displayName" : "Stateful Variables Initial Value",
-          "identifiesControllerService" : false,
-          "name" : "Stateful Variables Initial Value",
-          "sensitive" : false
-        }
-      },
-      "runDurationMillis" : 0,
-      "schedulingPeriod" : "0 sec",
-      "schedulingStrategy" : "TIMER_DRIVEN",
-      "style" : { },
-      "type" : "org.apache.nifi.processors.attributes.UpdateAttribute",
       "yieldDuration" : "1 sec"
     } ],
     "remoteProcessGroups" : [ ],
