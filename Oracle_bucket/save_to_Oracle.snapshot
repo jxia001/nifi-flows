@@ -427,7 +427,7 @@
       "type" : "org.apache.nifi.processors.standard.ConvertJSONToSQL",
       "yieldDuration" : "1 sec"
     }, {
-      "autoTerminatedRelationships" : [ ],
+      "autoTerminatedRelationships" : [ "success" ],
       "bulletinLevel" : "WARN",
       "bundle" : {
         "artifact" : "nifi-standard-nar",
