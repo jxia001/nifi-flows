@@ -1,4 +1,4 @@
 flows:
-  c6b78c2e-0aa6-449e-964d-7f9aa42cda2a: {ver: 1, file: save_to_Oracle.snapshot}
+  c6b78c2e-0aa6-449e-964d-7f9aa42cda2a: {ver: 2, file: save_to_Oracle.snapshot}
 layoutVer: 1
 bucketId: 96b9a04e-4a58-4778-a8e1-a67ef19f3c7a
