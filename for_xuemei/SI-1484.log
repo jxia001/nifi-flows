@@ -1,0 +1,446 @@
+13:45:56 SQL> ALTER SESSION SET CURRENT_SCHEMA = &1;
+old   1: ALTER SESSION SET CURRENT_SCHEMA = &1
+new   1: ALTER SESSION SET CURRENT_SCHEMA = pardev_qa
+
+Session altered.
+
+Elapsed: 00:00:00.00
+13:45:56 SQL> 
+13:45:56 SQL> 
+13:45:56 SQL> --print the patch start time
+13:45:56 SQL> select systimestamp from dual;
+
+SYSTIMESTAMP                                                                                       
+---------------------------------------------------------------------------                        
+25-MAR-22 01.45.56.971230 PM +00:00                                                                
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:56 SQL> 
+13:45:56 SQL> --disable load_to_qc, run_qc, load_ods, load_data_mart, load_support_codes, run_qc_cat2 jobs
+13:45:56 SQL> 
+13:45:56 SQL> begin
+13:45:56   2  
+13:45:56   3  par_db_utils.disable_db_jobs(in_job_name	=> 'LOAD_ODS_SCHEDULE',   in_owner     => upper('&1'));
+13:45:56   4  
+13:45:56   5  par_db_utils.disable_db_jobs(in_job_name	=> 'LOAD_DATA_MARTS_SCHEDULE',	in_owner     => upper('&1'));
+13:45:56   6  
+13:45:56   7  end;
+13:45:56   8  
+13:45:56   9  /
+old   3: par_db_utils.disable_db_jobs(in_job_name  => 'LOAD_ODS_SCHEDULE',   in_owner     => upper('&1'));
+new   3: par_db_utils.disable_db_jobs(in_job_name  => 'LOAD_ODS_SCHEDULE',   in_owner     => upper('pardev_qa'));
+old   5: par_db_utils.disable_db_jobs(in_job_name  => 'LOAD_DATA_MARTS_SCHEDULE',  in_owner     => upper('&1'));
+new   5: par_db_utils.disable_db_jobs(in_job_name  => 'LOAD_DATA_MARTS_SCHEDULE',  in_owner     => upper('pardev_qa'));
+
+PL/SQL procedure successfully completed.
+
+Elapsed: 00:00:00.21
+13:45:57 SQL> 
+13:45:57 SQL> --before cleanup:
+13:45:57 SQL> 
+13:45:57 SQL> -- Get counts on ODS data
+13:45:57 SQL> select count(*) from ODS_CREDENTIALS  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:57 SQL> select count(*)  from ODS_CREDENTIALS_EARNED  where institution_id=11027 ;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> select count(*)  from ODS_FINANCIAL_AID  where institution_id=11027 ;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> select count(*)  from ODS_STUDENT  where institution_id=11027 ;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:57 SQL> select count(*)  from ODS_STUDENT_CHANGING_VAR  where institution_id=11027 ;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> select count(*)  from ODS_COURSE_CATALOG	where institution_id=11027 ;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> select count(*)  from ODS_STUDENT_COURSE	where institution_id=11027 ;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:57 SQL> select count(*)  from ODS_STUDENT_TRANSFER  where institution_id=11027 ;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> 
+13:45:57 SQL> -- Get counts on DIM data
+13:45:57 SQL> select count(*)  from DIM_TERM  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:57 SQL> select count(*)  from DIM_STUDENT  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> select count(*)  from DIM_PROGRAM  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> select count(*)  from DIM_INST_STATUS  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:57 SQL> select count(*)  from DIM_GRADE  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> select count(*)  from DIM_DEVED_GRADE  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:57 SQL> select count(*)  from DIM_DEL_MODE  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> select count(*)  from DIM_CREDENTIALS  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:57 SQL> select count(*)  from DIM_COURSE_CATALOG	where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> select count(*)  from DIM_COLLEGE_TRANSFER  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:57 SQL> select count(*)  from DIM_CAMPUS	where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:57 SQL> 
+13:45:57 SQL> 
+13:45:57 SQL> PROMPT backup tables to be cleaned and clean all old data for 11027 in ODS and DIM
+backup tables to be cleaned and clean all old data for 11027 in ODS and DIM
+13:45:57 SQL> 
+13:45:57 SQL> exec clean_dim(11027);
+
+PL/SQL procedure successfully completed.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> 
+13:45:57 SQL> exec clean_ods(11027);
+
+PL/SQL procedure successfully completed.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> 
+13:45:57 SQL> 
+13:45:57 SQL> -- Verification: should return 0
+13:45:57 SQL> -- Get counts on ODS data
+13:45:57 SQL> select count(*) from ODS_CREDENTIALS  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:57 SQL> select count(*)  from ODS_CREDENTIALS_EARNED  where institution_id=11027 ;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> select count(*)  from ODS_FINANCIAL_AID  where institution_id=11027 ;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:57 SQL> select count(*)  from ODS_STUDENT  where institution_id=11027 ;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> select count(*)  from ODS_STUDENT_CHANGING_VAR  where institution_id=11027 ;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:57 SQL> select count(*)  from ODS_COURSE_CATALOG	where institution_id=11027 ;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> select count(*)  from ODS_STUDENT_COURSE	where institution_id=11027 ;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:57 SQL> select count(*)  from ODS_STUDENT_TRANSFER  where institution_id=11027 ;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> 
+13:45:57 SQL> -- Get counts on DIM data
+13:45:57 SQL> select count(*)  from DIM_TERM  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:57 SQL> select count(*)  from DIM_STUDENT  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> select count(*)  from DIM_PROGRAM  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:57 SQL> select count(*)  from DIM_INST_STATUS  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> select count(*)  from DIM_GRADE  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:57 SQL> select count(*)  from DIM_DEVED_GRADE  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> select count(*)  from DIM_DEL_MODE  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:57 SQL> select count(*)  from DIM_CREDENTIALS  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> select count(*)  from DIM_COURSE_CATALOG	where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:57 SQL> select count(*)  from DIM_COLLEGE_TRANSFER  where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> select count(*)  from DIM_CAMPUS	where institution_id=11027;
+
+  COUNT(*)                                                                                         
+----------                                                                                         
+         0                                                                                         
+
+1 row selected.
+
+Elapsed: 00:00:00.00
+13:45:57 SQL> 
+13:45:57 SQL> 
+13:45:57 SQL> 
+13:45:57 SQL> 
+13:45:57 SQL> --enable load_to_qc, run_qc, load_ods, load_data_mart, load_support_codes, run_qc_cat2 jobs
+13:45:57 SQL> 
+13:45:57 SQL> begin
+13:45:57   2  par_db_utils.enable_db_jobs(in_job_name  => 'LOAD_ODS_SCHEDULE',in_owner	   => upper('&1'));
+13:45:57   3  
+13:45:57   4  par_db_utils.enable_db_jobs(in_job_name  => 'LOAD_DATA_MARTS_SCHEDULE',  in_owner     => upper('&1'));
+13:45:57   5  
+13:45:57   6  end;
+13:45:57   7  /
+old   2: par_db_utils.enable_db_jobs(in_job_name  => 'LOAD_ODS_SCHEDULE',in_owner     => upper('&1'));
+new   2: par_db_utils.enable_db_jobs(in_job_name  => 'LOAD_ODS_SCHEDULE',in_owner     => upper('pardev_qa'));
+old   4: par_db_utils.enable_db_jobs(in_job_name  => 'LOAD_DATA_MARTS_SCHEDULE',  in_owner     => upper('&1'));
+new   4: par_db_utils.enable_db_jobs(in_job_name  => 'LOAD_DATA_MARTS_SCHEDULE',  in_owner     => upper('pardev_qa'));
+
+PL/SQL procedure successfully completed.
+
+Elapsed: 00:00:00.28
+13:45:57 SQL> 
+13:45:57 SQL> -- print the patch end time
+13:45:57 SQL> select systimestamp from dual;
+
+SYSTIMESTAMP                                                                                       
+---------------------------------------------------------------------------                        
+24-MAR-22 01.45.57.707749 PM +00:00                                                                
+
+1 row selected.
+
+Elapsed: 00:00:00.01
+13:45:57 SQL> 
+13:45:57 SQL> PROMPT Fix applied.
+Fix applied.
+13:45:57 SQL> 
+13:45:57 SQL> spool off
